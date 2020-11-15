@@ -7,37 +7,56 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+/**
+ * This class sets up an array of 4 Tile instances as a panel.
+ * Each tile can be randomly changed when clicked.
+ * @author gerne
+ *
+ */
 public class TilePanel extends JPanel implements MouseListener, MouseMotionListener {
+	// sets up mouse and array of tiles
 	private String mouseStatus;
 	private ArrayList<Tile> tiles;
-	// where do I initialize the individual tiles?
-	// Should i make them their own variables?
-	// Or should I make a list and somewhere specify the values?
+	
+	// allows access to private array of tiles
 	public ArrayList<Tile> getTiles() {
 		return tiles;
 	}
 	
+	/**
+	 * This function sets up the array of tiles.
+	 * @param tiles Tile array
+	 */
 	public void setTiles(ArrayList<Tile> tiles) {
 		this.tiles = tiles;
 	}
 	
+	/**
+	 * This constructor sets up an initial tile panel with 4 tiles
+	 * of specified shape and color.
+	 */
 	public TilePanel() {
 		mouseStatus = "Welcome!";
 		addMouseListener(this);
 		addMouseMotionListener(this);
 		tiles = new ArrayList<Tile>();
-		tiles.add(new Tile(25, "YELLOW", "circle"));
-		tiles.add(new Tile(225, "BLUE", "square"));
-		tiles.add(new Tile(425, "RED", "square"));
-		tiles.add(new Tile(625, "RED", "square"));
+		tiles.add(new Tile("YELLOW", "circle"));
+		tiles.add(new Tile("BLUE", "square"));
+		tiles.add(new Tile("RED", "square"));
+		tiles.add(new Tile("RED", "square"));
 	}
 	
+	/**
+	 * This function overrides the paint component so that tiles will be 
+	 * drawn based on their shape and color.
+	 */
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		int tileDim = 150;
-		int tileTop = 25;
-		for (Tile tile: tiles) {
+		int tileDim = 150; // width + height of tile
+		int tileTop = 25;  // starting point of top of tile 
+		int x = 25;		   // starting point of left of tile for first tile
+		for (Tile tile: tiles) { // for each tile
 			if (tile.getShapeType().equals("circle")) {
 				if (tile.getShapeColor().equals("YELLOW")) {
 					g.setColor(Color.YELLOW);
@@ -50,7 +69,7 @@ public class TilePanel extends JPanel implements MouseListener, MouseMotionListe
 				} else {
 					g.setColor(Color.BLUE);
 				}
-				g.fillOval(tile.getX(), tileTop, tileDim, tileDim);
+				g.fillOval(x, tileTop, tileDim, tileDim);
 			} else {
 				if (tile.getShapeType().equals("YELLOW")) {
 					g.setColor(Color.YELLOW);
@@ -63,8 +82,9 @@ public class TilePanel extends JPanel implements MouseListener, MouseMotionListe
 				} else {
 					g.setColor(Color.BLUE);
 				}
-				g.fillRect(tile.getX(), tileTop, tileDim, tileDim);
+				g.fillRect(x, tileTop, tileDim, tileDim);
 			}
+			x += 200; // increments left starting point
 		}
 	}
 	// Mouse commands 
@@ -90,11 +110,14 @@ public class TilePanel extends JPanel implements MouseListener, MouseMotionListe
 		mouseStatus = String.format("Mouse released at (%d, %d)", e.getX(), e.getY());
 		repaint();
 	}
+	/**
+	 * When the mouse is clicked within the range of a certain tile, 
+	 * its shape and color will be changed randomly.
+	 */
 	public void mouseClicked(MouseEvent e) { 
 		mouseStatus = String.format("Mouse clicked at (%d, %d)", e.getX(), e.getY());
 		if ((e.getX() >= 25 && e.getX() <= 175) && (e.getY() >= 25 && e.getY() <= 175)) {
 			tiles.get(0).setRandomly();
-			System.out.println(tiles.get(0));
 		} 
 		
 		if ((e.getX() >= 225 && e.getX() <= 375) && (e.getY() >= 25 && e.getY() <= 175)) {

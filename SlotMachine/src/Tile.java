@@ -1,15 +1,18 @@
+import java.io.Serializable;
 import java.util.Random;
 
-public class Tile {
-	// what to do with set type, set color, and random 
-	// really confused here because user won't ever enter anything
+/**
+ * This class creates a tile instance that is defined by its shape
+ * and color
+ * @author gerne
+ *
+ */
+public class Tile implements Serializable{
+	// Following variables define color and shape type
 	private String shapeColor;
 	private String shapeType;
-	private int x;
 	
-	public int getX() {
-		return x;
-	}
+	// Following functions allow access to each private variable
 	public String getShapeColor() {
 		return shapeColor;
 	}
@@ -17,35 +20,46 @@ public class Tile {
 		return shapeType;
 	}
 	
-	public void setX(int x) {
-		this.x = x;
-	}
-	
+	/**
+	 * This function sets the color of the tile.
+	 * @param color Color of tile as string
+	 */
 	public void setShapeColor(String color) {
 		shapeColor = color;
 	}
-	
+	/**
+	 * This function sets the shape of the tile.
+	 * @param type Shape of tile as string
+	 */
 	public void setShapeType(String type) {
 		shapeType = type;
 	}
 	
-	// Default constructor
+	/**
+	 * Default constructor that sets up a default panel.
+	 */
 	public Tile() {
-		x = 0;
 		shapeColor = "YELLOW";
 		shapeType = "circle";
 	}
 	
-	public Tile(int xPos, String color, String type) {
-		// type, color = setRandomly();
-		setX(xPos);
+	/**
+	 * Non-default constructor that takes in color and shape type to
+	 * create a tile.
+	 * @param color The color of the tile as a string.
+	 * @param type The shape of the tile as a string.
+	 */
+	public Tile(String color, String type) {
 		setShapeColor(color);
 		setShapeType(type);
 	}
-	// will change color and shape randomly
+	
+	/**
+	 * This function chooses random integers between 0 and 1 and between
+	 * 0 and 4 in order in order to randomly set the shape and color
+	 * of the tile respectively.
+	 */
 	public void setRandomly() {
-		// another possibility, return array of random nums
-		// and call in tile
 		Random rand = new Random();
 		int rndType = rand.nextInt(2);
 		int rndShape = rand.nextInt(5);
@@ -69,9 +83,13 @@ public class Tile {
 		}
 	}
 	
+	/**
+	 * This function overrides the toString() method so that the tile
+	 * will print out its color and type.
+	 */
 	@Override
 	public String toString() {
-		return String.format("%d %s %s", x, shapeColor, shapeType);
+		return String.format("%s %s", shapeColor, shapeType);
 	}
 	
 }

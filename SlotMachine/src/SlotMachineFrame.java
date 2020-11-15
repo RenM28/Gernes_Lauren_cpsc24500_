@@ -19,8 +19,17 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/** 
+ * This class sets up the look of the frame.
+ * It also sets up the file menu and provides its execution through
+ * action listeners.
+ * @author gerne
+ *
+ */
 public class SlotMachineFrame extends JFrame{
+	// panel variable that displays tiles
 	private TilePanel pan;
+	
 	/**
 	 * This function allows the frame to be centered on the screen.
 	 * @param width The width of the frame as an integer
@@ -36,11 +45,17 @@ public class SlotMachineFrame extends JFrame{
 		setBounds(left, top, width, height);
 	}
 	
+	/**
+	 * This function sets up the file menu.
+	 */
 	public void setupMenu() {
 		JMenuBar mbar = new JMenuBar();
 		JMenu mnuFile = new JMenu("File");
 		mbar.add(mnuFile);
-		
+		 
+		// If load tiles is clicked, extension will be checked and
+		// respective function for reading that extension will 
+		// be called
 		JMenuItem miLoadTiles = new JMenuItem("Load Tiles");
 		miLoadTiles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -49,7 +64,7 @@ public class SlotMachineFrame extends JFrame{
 				ArrayList<Tile> tilesRead;
 				if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					tr = new TileReader();
-					tilesRead = tr.readFromText(jfc.getSelectedFile());
+					tilesRead = tr.read(jfc.getSelectedFile());
 					if (tilesRead == null) {
 						JOptionPane.showMessageDialog(null, "Could not read tiles.");
 					} else {
@@ -61,6 +76,9 @@ public class SlotMachineFrame extends JFrame{
 		});
 		mnuFile.add(miLoadTiles);
 		
+		// If save tiles is clicked, extension will be checked and
+		// respective function for writing that file extension will
+		// be called
 		JMenuItem miSaveTiles = new JMenuItem("Save Tiles");
 		miSaveTiles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -68,7 +86,7 @@ public class SlotMachineFrame extends JFrame{
 				TileWriter tw;
 				if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 					tw = new TileWriter();
-					if (tw.writeToText(jfc.getSelectedFile(), pan.getTiles())) {
+					if (tw.write(jfc.getSelectedFile(), pan.getTiles())) {
 						JOptionPane.showMessageDialog(null, "Tiles were written :)");
 					} else {
 						JOptionPane.showMessageDialog(null, "Tiles could not be written :(");
@@ -103,6 +121,7 @@ public class SlotMachineFrame extends JFrame{
 		});
 		mnuFile.add(miExit);
 		
+		// If help is clicked, user will see name of author and github link
 		JMenu mnuHelp = new JMenu("Help");
 		mbar.add(mnuHelp);
 		JMenuItem miAbout = new JMenuItem("About");
@@ -116,13 +135,17 @@ public class SlotMachineFrame extends JFrame{
 		
 	}
 	
+	/**
+	 * This function sets up the look of the frame.
+	 */
 	public void setupLook() {
-		centerFrame(820,330); 
+		centerFrame(820,330); // centers frame
 		setTitle("Las Vegas Slot Machine");
 		Container c = getContentPane();
 		c.setLayout(new BorderLayout());
-		pan = new TilePanel();
+		pan = new TilePanel(); // sets up tile panel
 		c.add(pan, BorderLayout.CENTER);
+		// sets up bottom bar with max, mid, and min buttons
 		JPanel panSouth = new JPanel();
 		panSouth.setLayout(new FlowLayout());
 		JButton btnMax = new JButton("Max");
@@ -135,9 +158,13 @@ public class SlotMachineFrame extends JFrame{
 		JTextField txtBalance = new JTextField(6);
 		panSouth.add(txtBalance);
 		c.add(panSouth, BorderLayout.SOUTH);
-		setupMenu();
+		setupMenu(); // sets menu
 	}
 	
+	/**
+	 * This constructor sets up the look of the frame, as well as the
+	 * exit operation.
+	 */
 	public SlotMachineFrame() {
 		setupLook();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
