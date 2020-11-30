@@ -35,13 +35,13 @@ public class TileReader {
 			Scanner fsc = new Scanner(f);
 			String line;
 			String[] parts;
-			String color, type;
+			int color, type;
 			Tile tile;
 			while (fsc.hasNextLine()) {
 				line = fsc.nextLine();
 				parts = line.split(" ");
-				color = parts[0];
-				type = parts[1];
+				color = Integer.parseInt(parts[0]);
+				type = Integer.parseInt(parts[1]);
 				tile = new Tile(color, type);
 				tilesRead.add(tile);
 			}

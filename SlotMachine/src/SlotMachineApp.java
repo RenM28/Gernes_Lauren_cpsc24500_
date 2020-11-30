@@ -7,6 +7,7 @@ public class SlotMachineApp {
 	/**
 	 * This function sets up the slot machine frame and sets its
 	 * visibility to true.
+	 * It also spins the tiles after the program starts.
 	 * @param args
 	 */
 	public static void main(String[] args) {

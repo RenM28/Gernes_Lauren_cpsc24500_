@@ -9,29 +9,29 @@ import java.util.Random;
  */
 public class Tile implements Serializable{
 	// Following variables define color and shape type
-	private String shapeColor;
-	private String shapeType;
+	private int shapeColor;
+	private int shapeType;
 	
 	// Following functions allow access to each private variable
-	public String getShapeColor() {
+	public int getShapeColor() {
 		return shapeColor;
 	}
-	public String getShapeType() {
+	public int getShapeType() {
 		return shapeType;
 	}
 	
 	/**
 	 * This function sets the color of the tile.
-	 * @param color Color of tile as string
+	 * @param color Color of tile as integer
 	 */
-	public void setShapeColor(String color) {
+	public void setShapeColor(int color) {
 		shapeColor = color;
 	}
 	/**
 	 * This function sets the shape of the tile.
-	 * @param type Shape of tile as string
+	 * @param type Shape of tile as integer
 	 */
-	public void setShapeType(String type) {
+	public void setShapeType(int type) {
 		shapeType = type;
 	}
 	
@@ -39,17 +39,17 @@ public class Tile implements Serializable{
 	 * Default constructor that sets up a default panel.
 	 */
 	public Tile() {
-		shapeColor = "YELLOW";
-		shapeType = "circle";
+		shapeColor = 0;
+		shapeType = 0;
 	}
 	
 	/**
 	 * Non-default constructor that takes in color and shape type to
 	 * create a tile.
-	 * @param color The color of the tile as a string.
-	 * @param type The shape of the tile as a string.
+	 * @param color The color of the tile as an integer
+	 * @param type The shape of the tile as an integer
 	 */
-	public Tile(String color, String type) {
+	public Tile(int color, int type) {
 		setShapeColor(color);
 		setShapeType(type);
 	}
@@ -59,28 +59,11 @@ public class Tile implements Serializable{
 	 * 0 and 4 in order in order to randomly set the shape and color
 	 * of the tile respectively.
 	 */
-	public void setRandomly() {
-		Random rand = new Random();
-		int rndType = rand.nextInt(2);
-		int rndShape = rand.nextInt(5);
-		
-		if (rndShape == 0) {
-			shapeColor = "YELLOW";
-		} else if (rndShape == 1) {
-			shapeColor = "GREEN";
-		} else if (rndShape == 2) {
-			shapeColor = "ORANGE";
-		} else if (rndShape == 3) {
-			shapeColor = "RED";
-		} else {
-			shapeColor = "BLUE";
-		}
-		
-		if (rndType == 0) {
-			shapeType = "circle";
-		} else {
-			shapeType = "square";
-		}
+	public void setRandomly(Random rand) {
+		int shapeSelection = 2;
+		int colorSelection = 5;
+		shapeType = rand.nextInt(shapeSelection);
+		shapeColor = rand.nextInt(colorSelection);
 	}
 	
 	/**
@@ -89,7 +72,7 @@ public class Tile implements Serializable{
 	 */
 	@Override
 	public String toString() {
-		return String.format("%s %s", shapeColor, shapeType);
+		return String.format("%d %d", shapeColor, shapeType);
 	}
 	
 }
